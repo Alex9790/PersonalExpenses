@@ -1,6 +1,6 @@
-# personal_expenses
+# Personal Expenses
 
-A new Flutter project.
+A Flutter Expense Register App, where you can record your expenses of the day, and you get a summary chart that shows the total expenses made each day.
 
 ## Getting Started
 
