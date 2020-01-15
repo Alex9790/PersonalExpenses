@@ -6,6 +6,10 @@ class NewTransaction extends StatelessWidget {
   //String montoInput;
   final montoController = TextEditingController();
 
+  final Function nuevaTransaccion;
+
+  NewTransaction(this.nuevaTransaccion);
+
   @override
   Widget build(BuildContext context) {
     //** Input Data */
@@ -42,6 +46,9 @@ class NewTransaction extends StatelessWidget {
                 //print(montoInput);
                 print(montoController
                     .text); //de esta forma se accede al contenido almacenado en la varible Controller
+                if(tituloInput != null && montoController.text != null){
+                  nuevaTransaccion(tituloInput, double.parse(montoController.text));
+                }
               },
             ),
           ],

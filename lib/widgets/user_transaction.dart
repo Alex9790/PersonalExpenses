@@ -25,11 +25,23 @@ class _UserTransactionsState extends State<UserTransactions> {
     ),
   ];
 
+  //metodo para agregar gastos nuevos a la lista
+  void _addNewTransaction(String titulo, double monto){
+    final nuevaTransaccion = Transaction(titulo: titulo, monto: monto, fecha: DateTime.now(), id: DateTime.now().toString());
+
+    setState(() {
+      //se actualiza el estado del Widget con la nueva lista de gastos
+      //_userTransactions es final, pero es el apuntador hacia los datos lo que es constante, asi que se pueden agregar nuevos elementos a esa lista
+      //pero no se puede cambiar por otra lista
+      _userTransactions.add(nuevaTransaccion);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       //** Input Data */
-      NewTransaction(),
+      NewTransaction(_addNewTransaction),
       /** Lista de Gastos */
       TransactionList(_userTransactions),
     ],);
