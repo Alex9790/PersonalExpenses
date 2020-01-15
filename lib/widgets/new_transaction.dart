@@ -2,13 +2,28 @@ import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
   //Inputs
-  String tituloInput;
-  //String montoInput;
+  final tituloController = TextEditingController();
   final montoController = TextEditingController();
 
   final Function nuevaTransaccion;
 
   NewTransaction(this.nuevaTransaccion);
+
+  void submitData(){
+    print(
+        tituloController.text); //se prueba que se esten recibiendo bien los datos de entrada
+    //print(montoInput);
+    print(montoController
+        .text); //de esta forma se accede al contenido almacenado en la varible Controller
+
+    
+    if(tituloController.text.isNotEmpty && tituloController.text != null && montoController.text != null){
+      double monto = double.parse(montoController.text);
+      if(monto > 0.0){
+        nuevaTransaccion(tituloController.text, monto);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +41,21 @@ class NewTransaction extends StatelessWidget {
               decoration: InputDecoration(
                   labelText:
                       "Titulo"), //label para identificar el input al usuario
-              onChanged: (val) => tituloInput =
-                  val, //se asigna el valor del input a la variable, cada vez que presione una tecla
+              //onChanged: (val) => tituloInput = val, //se asigna el valor del input a la variable, cada vez que presione una tecla
+              controller: tituloController,
             ),
             TextField(
               decoration: InputDecoration(labelText: "Monto"),
               /*onChanged: (valor) {
                       montoInput = valor;
                     },*/
-              controller:
-                  montoController, //otra forma de obtener datos input, es utilizando controllers
+              controller: montoController, //otra forma de obtener datos input, es utilizando controllers
+              keyboardType: TextInputType.number, //tipo de teclado a mostrar en pantalla cuando se hace focus
             ),
             FlatButton(
               child: Text("Agregar Transacción"),
               textColor: Colors.purple,
-              onPressed: () {
-                print(
-                    tituloInput); //se prueba que se esten recibiendo bien los datos de entrada
-                //print(montoInput);
-                print(montoController
-                    .text); //de esta forma se accede al contenido almacenado en la varible Controller
-                if(tituloInput != null && montoController.text != null){
-                  nuevaTransaccion(tituloInput, double.parse(montoController.text));
-                }
-              },
+              onPressed: submitData,
             ),
           ],
         ),

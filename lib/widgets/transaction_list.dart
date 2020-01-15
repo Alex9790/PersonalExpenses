@@ -34,7 +34,7 @@ class TransactionList extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   child: Text(
                     //Monto
-                    "\$${transactions[index].monto}", //Se usa String Interpolation
+                    "\$${transactions[index].monto.toStringAsFixed(2)}", //Se usa String Interpolation, se forza mostrar hasta dos decimales
                     style: TextStyle(
                       //definiendo estilo del texto
                       fontWeight: FontWeight.bold,
