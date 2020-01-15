@@ -31,6 +31,11 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
+  //Inputs
+  String tituloInput;
+  //String montoInput;
+  final montoController = TextEditingController(); 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,14 +67,24 @@ class MyHomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   TextField(
-                    decoration: InputDecoration(labelText: "Titulo"),
+                    decoration: InputDecoration(labelText: "Titulo"),   //label para identificar el input al usuario
+                    onChanged: (val) => tituloInput = val,              //se asigna el valor del input a la variable, cada vez que presione una tecla
                   ),
                   TextField(
                     decoration: InputDecoration(labelText: "Monto"),
+                    /*onChanged: (valor) {
+                      montoInput = valor;
+                    },*/
+                    controller: montoController,      //otra forma de obtener datos input, es utilizando controllers
                   ),
                   FlatButton(
                     child: Text("Agregar Transacción"),
-                    onPressed: () {}, textColor: Colors.purple,  
+                    textColor: Colors.purple,
+                    onPressed: () {
+                      print(tituloInput);   //se prueba que se esten recibiendo bien los datos de entrada
+                      //print(montoInput);
+                      print(montoController.text);  //de esta forma se accede al contenido almacenado en la varible Controller
+                    },   
                   ),
                 ],
               ),
