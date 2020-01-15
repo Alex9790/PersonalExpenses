@@ -39,9 +39,10 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        //mainAxisAlignment: MainAxisAlignment.start, //se comenta por q es la opcion por defecto
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          /** Grafico Resumen */
           //seccion para el grafico resumen, con Container puedes definir el tamaño que cubre
           Container(
             width: double.infinity, //tanto espacio como sea posible
@@ -50,6 +51,31 @@ class MyHomePage extends StatelessWidget {
               child: Text("Grafico"),
             ),
           ),
+          //** Input Data */
+          Card(
+            elevation:
+                5, //mediante el uso de sombras logra un efecto de elevacion en el Card()
+            child: Container(              
+              //se usa container para poder incluir padding a los textfields
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: "Titulo"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: "Monto"),
+                  ),
+                  FlatButton(
+                    child: Text("Agregar Transacción"),
+                    onPressed: () {}, textColor: Colors.purple,  
+                  ),
+                ],
+              ),
+            ),
+          ),
+          /** Lista de Gastos */
           //seccion para la lista de gastos
           //forma de convertir los datos de la clase en una lista de Widget que se pueda mostrar en pantalla
           Column(
@@ -71,7 +97,7 @@ class MyHomePage extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: Text(
                         //Monto
-                        "\$${transaccion.monto}",        //Se usa String Interpolation
+                        "\$${transaccion.monto}", //Se usa String Interpolation
                         style: TextStyle(
                           //definiendo estilo del texto
                           fontWeight: FontWeight.bold,
@@ -82,14 +108,17 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[                        
-                        Text(                   //Titulo del Gasto
+                      children: <Widget>[
+                        Text(
+                          //Titulo del Gasto
                           transaccion.titulo,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15),
                         ),
-                        Text(                   //Fecha cuando se registro el gasto
-                          DateFormat.yMMMd().format(transaccion.fecha),         //definiendo un formato para la fecha
+                        Text(
+                          //Fecha cuando se registro el gasto
+                          DateFormat.yMMMd().format(transaccion
+                              .fecha), //definiendo un formato para la fecha
                           style: TextStyle(fontSize: 10, color: Colors.grey),
                         ),
                       ],
