@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   //Inputs
-  final tituloController = TextEditingController();
-  final montoController = TextEditingController();
-
   final Function nuevaTransaccion;
 
   NewTransaction(this.nuevaTransaccion);
 
-  void submitData(){
-    print(
-        tituloController.text); //se prueba que se esten recibiendo bien los datos de entrada
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final tituloController = TextEditingController();
+
+  final montoController = TextEditingController();
+
+  void submitData() {
+    print(tituloController
+        .text); //se prueba que se esten recibiendo bien los datos de entrada
     //print(montoInput);
     print(montoController
         .text); //de esta forma se accede al contenido almacenado en la varible Controller
 
-    
-    if(tituloController.text.isNotEmpty && tituloController.text != null && montoController.text != null){
+    if (tituloController.text.isNotEmpty &&
+        tituloController.text != null &&
+        montoController.text != null) {
       double monto = double.parse(montoController.text);
-      if(monto > 0.0){
-        nuevaTransaccion(tituloController.text, monto);
+      if (monto > 0.0) {
+        widget.nuevaTransaccion(tituloController.text, monto);
+        //para cerrar el Modal al finalizar el insert
+        Navigator.of(context).pop();
       }
     }
+
+    
   }
 
   @override
@@ -49,8 +60,10 @@ class NewTransaction extends StatelessWidget {
               /*onChanged: (valor) {
                       montoInput = valor;
                     },*/
-              controller: montoController, //otra forma de obtener datos input, es utilizando controllers
-              keyboardType: TextInputType.number, //tipo de teclado a mostrar en pantalla cuando se hace focus
+              controller:
+                  montoController, //otra forma de obtener datos input, es utilizando controllers
+              keyboardType: TextInputType
+                  .number, //tipo de teclado a mostrar en pantalla cuando se hace focus
             ),
             FlatButton(
               child: Text("Agregar Transacción"),

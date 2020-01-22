@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
     //seccion para la lista de gastos
     //forma de convertir los datos de la clase en una lista de Widget que se pueda mostrar en pantalla
     return Container(
-      height: 300,
+      height: 500,
       child: ListView.builder(
         itemBuilder: (context, index) {
           return Card(
