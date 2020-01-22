@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/user_transaction.dart';
+import './models/transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,14 +17,57 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
-  /*void startAddNewTransaction(BuildContext ctx){    
-    //funcion para mostrar modal (ventana emergente) que muestre el widget "NewTransaction"
-    showModalBottomSheet(context: ctx, builder: (BuildContext context) {  
-      return NewTransaction(nuevaTransaccion);
+class _MyHomePageState extends State<MyHomePage> {
+  //lista con transacciones de ejemplo
+  final List<Transaction> _userTransactions = [
+    Transaction(
+      id: "1",
+      titulo: "Zapatos",
+      monto: 10.10,
+      fecha: DateTime.now(),
+    ),
+    Transaction(
+      id: "2",
+      titulo: "Comida",
+      monto: 20.20,
+      fecha: DateTime.now(),
+    ),
+  ];
+
+  //metodo para agregar gastos nuevos a la lista
+  void _addNewTransaction(String titulo, double monto) {
+    final nuevaTransaccion = Transaction(
+        titulo: titulo,
+        monto: monto,
+        fecha: DateTime.now(),
+        id: DateTime.now().toString());
+
+    setState(() {
+      //se actualiza el estado del Widget con la nueva lista de gastos
+      //_userTransactions es final, pero es el apuntador hacia los datos lo que es constante, asi que se pueden agregar nuevos elementos a esa lista
+      //pero no se puede cambiar por otra lista
+      _userTransactions.add(nuevaTransaccion);
     });
-  }*/
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    //funcion para mostrar modal (ventana emergente) que muestre el widget "NewTransaction"
+    showModalBottomSheet(
+        context: ctx,
+        builder: (BuildContext context) {
+          //se retorna el widget que se mostrara en la ventana emergente          
+          return GestureDetector(                       //widget para capturar el evento al interactuar con el Modal
+            onTap: () {},                               //funcion al realizar al hacer "tap" sobre modal, no queremos que haga nada (modal se cierra al hacer tap sobre el sin esto)
+            child: NewTransaction(_addNewTransaction),  //** Input Data */
+            //behavior: HitTestBehavior.opaque,         //creo q esta linea se usaba antes para que onTap funcionara bien, pero ahora sin esta linea funciona igual
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +78,10 @@ class MyHomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              //como la funcion recibe por parametro el Contexto, es necesario invocarlo desde una funcion anonima
+              _startAddNewTransaction(context);
+            },
           ),
         ],
       ),
@@ -52,14 +100,16 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             //formulario nuevos gastos y lista de gastos
-            UserTransactions(),
+            //UserTransactions(_addNewTransaction, _userTransactions),
+            /** Lista de Gastos */
+            TransactionList(_userTransactions),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
