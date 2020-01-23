@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //lista con transacciones de ejemplo
   final List<Transaction> _userTransactions = [
-    Transaction(
+    /*Transaction(
       id: "1",
       titulo: "Zapatos",
       monto: 10.10,
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       titulo: "Comida",
       monto: 20.20,
       fecha: DateTime.now(),
-    ),
+    ),*/
   ];
 
   //metodo para agregar gastos nuevos a la lista
