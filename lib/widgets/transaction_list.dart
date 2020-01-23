@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
-  
   final List<Transaction> transactions;
 
   TransactionList(this.transactions);
@@ -26,8 +25,8 @@ class TransactionList extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   //para definir un borde, pero creo que decoration se uede usar par amas
                   decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Colors.purple,
+                    border: Border.all(
+                    color: Theme.of(context).primaryColor, //para acceder a la opcion de colores definidas en el Tema de la App
                     width: 2,
                   )),
                   //padding en todas direcciones
@@ -39,7 +38,7 @@ class TransactionList extends StatelessWidget {
                       //definiendo estilo del texto
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -49,7 +48,8 @@ class TransactionList extends StatelessWidget {
                     Text(
                       //Titulo del Gasto
                       transactions[index].titulo,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     Text(
                       //Fecha cuando se registro el gasto
@@ -62,7 +62,7 @@ class TransactionList extends StatelessWidget {
             ),
           );
         },
-        itemCount: transactions.length,        
+        itemCount: transactions.length,
       ),
     );
   }

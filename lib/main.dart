@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './widgets/new_transaction.dart';
-import './widgets/user_transaction.dart';
+//import './widgets/user_transaction.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
 
@@ -11,7 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Personal Expenses',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+      ), //se define tema de la app, y se utiliza primarySwatch para generar diferentes tonalidades
       home: MyHomePage(),
     );
   }
@@ -60,8 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
         context: ctx,
         builder: (BuildContext context) {
-          //se retorna el widget que se mostrara en la ventana emergente          
-          return GestureDetector(                       //widget para capturar el evento al interactuar con el Modal
+          //se retorna el widget que se mostrara en la ventana emergente
+          return GestureDetector(
+            //widget para capturar el evento al interactuar con el Modal
             onTap: () {},                               //funcion al realizar al hacer "tap" sobre modal, no queremos que haga nada (modal se cierra al hacer tap sobre el sin esto)
             child: NewTransaction(_addNewTransaction),  //** Input Data */
             //behavior: HitTestBehavior.opaque,         //creo q esta linea se usaba antes para que onTap funcionara bien, pero ahora sin esta linea funciona igual
@@ -74,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       //barra superior con titulo y opciones
       appBar: AppBar(
-        title: Text('Flutter App'),
+        title: Text('Personal Expenses'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
