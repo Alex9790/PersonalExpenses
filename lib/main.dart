@@ -15,6 +15,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        fontFamily: "Quicksand",
+        textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                fontFamily: "OpenSans",
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          //tema particular solo para el AppBar
+          textTheme: ThemeData.light().textTheme.copyWith(
+                //ahora se define que exactamente del tema principal quieres sobreescribir
+                title: TextStyle(
+                  //en este caso el titulo
+                  fontFamily: "OpenSans",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
       ), //se define tema de la app, y se utiliza primarySwatch para generar diferentes tonalidades
       home: MyHomePage(),
     );
@@ -67,8 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
           //se retorna el widget que se mostrara en la ventana emergente
           return GestureDetector(
             //widget para capturar el evento al interactuar con el Modal
-            onTap: () {},                               //funcion al realizar al hacer "tap" sobre modal, no queremos que haga nada (modal se cierra al hacer tap sobre el sin esto)
-            child: NewTransaction(_addNewTransaction),  //** Input Data */
+            onTap:
+                () {}, //funcion al realizar al hacer "tap" sobre modal, no queremos que haga nada (modal se cierra al hacer tap sobre el sin esto)
+            child: NewTransaction(_addNewTransaction), //** Input Data */
             //behavior: HitTestBehavior.opaque,         //creo q esta linea se usaba antes para que onTap funcionara bien, pero ahora sin esta linea funciona igual
           );
         });

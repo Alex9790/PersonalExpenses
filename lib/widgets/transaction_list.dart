@@ -48,8 +48,7 @@ class TransactionList extends StatelessWidget {
                     Text(
                       //Titulo del Gasto
                       transactions[index].titulo,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style: Theme.of(context).textTheme.title,   //se asigna el estilo utilizado para los titulos
                     ),
                     Text(
                       //Fecha cuando se registro el gasto
