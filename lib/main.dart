@@ -4,6 +4,7 @@ import './widgets/new_transaction.dart';
 //import './widgets/user_transaction.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -49,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //lista con transacciones de ejemplo
   final List<Transaction> _userTransactions = [
-    /*Transaction(
+    Transaction(
       id: "1",
       titulo: "Zapatos",
       monto: 10.10,
@@ -60,8 +61,21 @@ class _MyHomePageState extends State<MyHomePage> {
       titulo: "Comida",
       monto: 20.20,
       fecha: DateTime.now(),
-    ),*/
+    ),
   ];
+
+  //metodo para extraer de la lista de transaciones totales, solo las de la ultima semana
+  List<Transaction> get _transaccionesRecientes {
+    //metodo de List para generar una lista con los elementos que cumplan la condicion
+    return _userTransactions.where((tx) {
+      //transacciones con fecha despues de (hoy - 7 dias)
+      return tx.fecha.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();  //where() retorna un "Iterable" no una List, asi que se debe convertir a List
+  }
 
   //metodo para agregar gastos nuevos a la lista
   void _addNewTransaction(String titulo, double monto) {
@@ -118,13 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             /** Grafico Resumen */
             //seccion para el grafico resumen, con Container puedes definir el tamaño que cubre
-            Container(
+            /*Container(
               width: double.infinity, //tanto espacio como sea posible
               child: Card(
                 color: Colors.blue,
                 child: Text("Grafico"),
               ),
-            ),
+            ),*/
+            Chart(_transaccionesRecientes),
             //formulario nuevos gastos y lista de gastos
             //UserTransactions(_addNewTransaction, _userTransactions),
             /** Lista de Gastos */

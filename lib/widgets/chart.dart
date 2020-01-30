@@ -27,9 +27,12 @@ class Chart extends StatelessWidget {
               totalSum += recentTransactions[i].monto;
         }
       }
+      print("Weekday = "+weekDay.toString());
+      print("Weekday = "+DateFormat.E().format(weekDay).toString());
+      print("Monto = "+totalSum.toString());
       //se retorna map con el dia y el gasto total
       return {
-        "dia": DateFormat.E(weekDay),       //para obtener en texto el dia de la semana
+        "dia": DateFormat.E().format(weekDay),       //para obtener en texto el dia de la semana
         "monto": totalSum,                  
       }; 
     });
@@ -37,6 +40,9 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print(groupedTransactionValues);
+
     return Card(
         elevation: 6,
         margin: EdgeInsets.all(20),
