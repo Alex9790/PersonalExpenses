@@ -11,7 +11,9 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text("\$${gasto.toStringAsFixed(0)}"), //colocar el gasto sin decimales
+        FittedBox(
+          child: Text("\$${gasto.toStringAsFixed(0)}"), //colocar el gasto sin decimales
+        ), 
         SizedBox(
           height: 4,
         ),
@@ -26,10 +28,10 @@ class ChartBar extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.grey,
-                    width: 10,
+                    width: 1,
                   ),
                   color: Color.fromRGBO(
-                      220, 200, 200, 1), //Color.fromRGBO(r, g, b, opacity)
+                      220, 220, 220, 1), //Color.fromRGBO(r, g, b, opacity)
                   borderRadius: BorderRadius.circular(10), //esquina redondeada
                 ),
               ),
@@ -42,7 +44,7 @@ class ChartBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10), //esquina redondeada
                 ),),
                 
-              )
+              ),
             ],
           ),
         ),

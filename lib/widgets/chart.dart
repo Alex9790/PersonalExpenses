@@ -56,13 +56,20 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin: EdgeInsets.all(20),
-        child: Row(
-          children: groupedTransactionValues.map((data){      //el metodo GET retorna una Lista, pero para poder mostar en pantalla necesitamos Widgets
-              return ChartBar(
-                data["dia"], 
-                data["monto"], 
-                totalSpending == 0.0 ? 0.0 : (data["monto"] as double) / totalSpending); //se debe evitar division entre 0
-          }).toList(),
+        child: Padding(               //se usa para poder agregar padding al Row, ya que desde Row no se puede
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues.map((data){      //el metodo GET retorna una Lista, pero para poder mostar en pantalla necesitamos Widgets
+                return Flexible(        //para gestionar espaciado dentro de los elementos del Row
+                    fit: FlexFit.tight, //se forza a un Widget hijo a respetar su espacio correspondiente sn tomar espacio de los demas hijos
+                    child: ChartBar(
+                      data["dia"], 
+                      data["monto"], 
+                      totalSpending == 0.0 ? 0.0 : (data["monto"] as double) / totalSpending), //se debe evitar division entre 0
+                    ); 
+            }).toList(),
+          ),
         ));
   }
 }
