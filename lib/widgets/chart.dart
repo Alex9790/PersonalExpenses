@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction>
@@ -38,6 +39,15 @@ class Chart extends StatelessWidget {
     });
   }
 
+  //metodo para conocer el total de gasto de la semana
+  double get totalSpending{
+                                 //.fold(initialValue, combine)
+                                              //sum: resultado acumulado despues de cada iteracion por la lista de items, en este caso es solo sumar los montos
+    return groupedTransactionValues.fold(0.0, (sum, item){
+        return sum + item["monto"];
+    }); 
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +58,10 @@ class Chart extends StatelessWidget {
         margin: EdgeInsets.all(20),
         child: Row(
           children: groupedTransactionValues.map((data){      //el metodo GET retorna una Lista, pero para poder mostar en pantalla necesitamos Widgets
-              return Text("${data["dia"]} : ${data["monto"]}");
+              return ChartBar(
+                data["dia"], 
+                data["monto"], 
+                totalSpending == 0.0 ? 0.0 : (data["monto"] as double) / totalSpending); //se debe evitar division entre 0
           }).toList(),
         ));
   }
