@@ -32,7 +32,7 @@ class Chart extends StatelessWidget {
       print("Monto = "+totalSum.toString());
       //se retorna map con el dia y el gasto total
       return {
-        "dia": DateFormat.E().format(weekDay),       //para obtener en texto el dia de la semana
+        "dia": DateFormat.E().format(weekDay).substring(0,1),       //para obtener en texto el dia de la semana, substring para solo obtener la primera letra
         "monto": totalSum,                  
       }; 
     });
@@ -47,7 +47,9 @@ class Chart extends StatelessWidget {
         elevation: 6,
         margin: EdgeInsets.all(20),
         child: Row(
-          children: <Widget>[],
+          children: groupedTransactionValues.map((data){      //el metodo GET retorna una Lista, pero para poder mostar en pantalla necesitamos Widgets
+              return Text("${data["dia"]} : ${data["monto"]}");
+          }).toList(),
         ));
   }
 }
