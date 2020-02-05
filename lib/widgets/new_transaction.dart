@@ -32,8 +32,6 @@ class _NewTransactionState extends State<NewTransaction> {
         Navigator.of(context).pop();
       }
     }
-
-    
   }
 
   @override
@@ -65,9 +63,23 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType
                   .number, //tipo de teclado a mostrar en pantalla cuando se hace focus
             ),
-            FlatButton(
+            Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Text("No se ha seleccionado una Fecha."),
+                  FlatButton(
+                    textColor: Theme.of(context).primaryColor,
+                    child: Text("Seleccionar Fecha", style: TextStyle(fontWeight: FontWeight.bold),),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            RaisedButton(
               child: Text("Agregar Transacción"),
-              textColor: Colors.purple,
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).textTheme.button.color,
               onPressed: submitData,
             ),
           ],

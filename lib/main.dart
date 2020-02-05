@@ -18,11 +18,12 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              title: TextStyle(                           //definir estilo de titulos
                 fontFamily: "OpenSans",
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              button: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),     //definir estilo de botones
             ),
         appBarTheme: AppBarTheme(
           //tema particular solo para el AppBar
@@ -74,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Duration(days: 7),
         ),
       );
-    }).toList();  //where() retorna un "Iterable" no una List, asi que se debe convertir a List
+    }).toList(); //where() retorna un "Iterable" no una List, asi que se debe convertir a List
   }
 
   //metodo para agregar gastos nuevos a la lista
