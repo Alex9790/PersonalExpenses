@@ -36,7 +36,7 @@ class Chart extends StatelessWidget {
         "dia": DateFormat.E().format(weekDay).substring(0,1),       //para obtener en texto el dia de la semana, substring para solo obtener la primera letra
         "monto": totalSum,                  
       }; 
-    });
+    }).reversed.toList();
   }
 
   //metodo para conocer el total de gasto de la semana

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ChartBar extends StatelessWidget {
   final String label;
   final double gasto;
-  final double gastoPorcentaje; //para conocer el porcentaje del background a colorear
+  final double
+      gastoPorcentaje; //para conocer el porcentaje del background a colorear
 
   ChartBar(this.label, this.gasto, this.gastoPorcentaje);
 
@@ -11,9 +12,15 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        FittedBox(     //encoge tamaño de cntenido para que se ajuste al tamaño disponible
-          child: Text("\$${gasto.toStringAsFixed(0)}"), //colocar el gasto sin decimales
-        ), 
+        Container(
+          //se encienra dentro container para poder definir una latura y no se descuadren las barras
+          height: 20,
+          child: FittedBox(
+            //encoge tamaño de cntenido para que se ajuste al tamaño disponible
+            child: Text(
+                "\$${gasto.toStringAsFixed(0)}"), //colocar el gasto sin decimales
+          ),
+        ),
         SizedBox(
           height: 4,
         ),
@@ -37,13 +44,14 @@ class ChartBar extends StatelessWidget {
               ),
               //caja que crece dependiendo del porcentaje suministrado, esta barra representa la parte llena de la barra, es decir, el gasto
               FractionallySizedBox(
-                heightFactor: gastoPorcentaje,    //valor entre 0 y 1
+                heightFactor: gastoPorcentaje, //valor entre 0 y 1
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(10), //esquina redondeada
-                ),),
-                
+                    borderRadius:
+                        BorderRadius.circular(10), //esquina redondeada
+                  ),
+                ),
               ),
             ],
           ),
