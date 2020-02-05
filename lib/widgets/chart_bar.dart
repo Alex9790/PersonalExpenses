@@ -11,7 +11,7 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        FittedBox(
+        FittedBox(     //encoge tamaño de cntenido para que se ajuste al tamaño disponible
           child: Text("\$${gasto.toStringAsFixed(0)}"), //colocar el gasto sin decimales
         ), 
         SizedBox(
