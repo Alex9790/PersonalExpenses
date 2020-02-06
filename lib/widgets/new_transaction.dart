@@ -25,10 +25,11 @@ class _NewTransactionState extends State<NewTransaction> {
 
     if (_tituloController.text.isNotEmpty &&
         _tituloController.text != null &&
-        _montoController.text != null) {
+        _montoController.text != null &&
+        _fechaSeleccionada != null) {
       double monto = double.parse(_montoController.text);
       if (monto > 0.0) {
-        widget.nuevaTransaccion(_tituloController.text, monto);
+        widget.nuevaTransaccion(_tituloController.text, monto, _fechaSeleccionada);
         //para cerrar el Modal al finalizar el insert
         Navigator.of(context).pop();
       }

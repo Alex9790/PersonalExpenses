@@ -79,11 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //metodo para agregar gastos nuevos a la lista
-  void _addNewTransaction(String titulo, double monto) {
+  void _addNewTransaction(String titulo, double monto, DateTime fecha) {
     final nuevaTransaccion = Transaction(
         titulo: titulo,
         monto: monto,
-        fecha: DateTime.now(),
+        fecha: fecha,
         id: DateTime.now().toString());
 
     setState(() {
