@@ -17,7 +17,7 @@ class UserTransactions extends StatelessWidget {
       //** Input Data */
       NewTransaction(nuevaTransaccion),
       /** Lista de Gastos */
-      TransactionList(transactions),
+      //TransactionList(transactions),
     ],);
   }
 }
