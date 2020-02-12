@@ -19,12 +19,15 @@ class MyApp extends StatelessWidget {
         errorColor: Colors.red,
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(                           //definir estilo de titulos
+              title: TextStyle(
+                //definir estilo de titulos
                 fontFamily: "OpenSans",
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-              button: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),     //definir estilo de botones
+              button: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold), //definir estilo de botones
             ),
         appBarTheme: AppBarTheme(
           //tema particular solo para el AppBar
@@ -111,28 +114,29 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _deleteTransaction(String id){
+  void _deleteTransaction(String id) {
     setState(() {
       _userTransactions.removeWhere((transaction) => transaction.id == id);
-    });    
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            //como la funcion recibe por parametro el Contexto, es necesario invocarlo desde una funcion anonima
+            _startAddNewTransaction(context);
+          },
+        ),
+      ],
+    );
     return Scaffold(
       //barra superior con titulo y opciones
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              //como la funcion recibe por parametro el Contexto, es necesario invocarlo desde una funcion anonima
-              _startAddNewTransaction(context);
-            },
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start, //se comenta por q es la opcion por defecto
@@ -147,11 +151,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Grafico"),
               ),
             ),*/
-            Chart(_transaccionesRecientes),
+            Container(
+              //se usa la clase MediaQuery para obtener la altuma maxima disponible
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Chart(_transaccionesRecientes),
+            ),
             //formulario nuevos gastos y lista de gastos
             //UserTransactions(_addNewTransaction, _userTransactions),
             /** Lista de Gastos */
-            TransactionList(_userTransactions, _deleteTransaction),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: TransactionList(_userTransactions, _deleteTransaction),
+            ),
           ],
         ),
       ),
