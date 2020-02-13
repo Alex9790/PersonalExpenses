@@ -16,25 +16,29 @@ class TransactionList extends StatelessWidget {
     //forma de convertir los datos de la clase en una lista de Widget que se pueda mostrar en pantalla
     return transactions
             .isEmpty //condicional para el caso en que "transactions" tenga contenido o no
-        ? (Column(children: <Widget>[
-            //si no tiene contenido se muestra texto e imagen
-            Text(
-              "No hay Gastos registrados.",
-              style: Theme.of(context).textTheme.title,
-            ),
-            SizedBox(
-              height: 20,
-            ), //puede tener contenido, pero se usa mas que todo para aplicar espaciado
-            Container(
-              //se necesita colocar la imagen dentro de un container para poder definir el tamaño a ocupar
-              height: 300,
-              child: Image.asset(
-                "assets/images/waiting.png", //ubicacion del asset
-                fit: BoxFit
-                    .cover, //pára que se ajusta al tamaño definido por el Container()
-              ),
-            ),
-          ]))
+        ? LayoutBuilder(
+            builder: (ctx, constraints) {
+              return Column(children: <Widget>[
+                //si no tiene contenido se muestra texto e imagen
+                Text(
+                  "No hay Gastos registrados.",
+                  style: Theme.of(context).textTheme.title,
+                ),
+                SizedBox(
+                  height: 20,
+                ), //puede tener contenido, pero se usa mas que todo para aplicar espaciado
+                Container(
+                  //se necesita colocar la imagen dentro de un container para poder definir el tamaño a ocupar
+                  height: constraints.maxHeight * 0.6,
+                  child: Image.asset(
+                    "assets/images/waiting.png", //ubicacion del asset
+                    fit: BoxFit
+                        .cover, //pára que se ajusta al tamaño definido por el Container()
+                  ),
+                ),
+              ]);
+            },
+          )
         : ListView.builder(
             //si tiene contenido se muestra la lista de gastos
             itemBuilder: (context, index) {
@@ -117,11 +121,20 @@ class TransactionList extends StatelessWidget {
                         .fecha), //definiendo un formato para la fecha
                     style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => deleteTx(transactions[index].id),
-                  ),
+                  //dependiendo del ancho disponible se ecide si se usa un boton con Label o sin Label
+                  trailing: MediaQuery.of(context).size.width > 450
+                      ? FlatButton.icon(
+                          onPressed: () => deleteTx(transactions[index].id),
+                          icon: Icon(Icons.delete),
+                          label: Text("Eliminar"),
+                          //color: Theme.of(context).errorColor,  //Color de todo el boton
+                          textColor: Theme.of(context).errorColor,
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => deleteTx(transactions[index].id),
+                        ),
                 ),
               );
             },

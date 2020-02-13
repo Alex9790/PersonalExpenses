@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './widgets/new_transaction.dart';
 //import './widgets/user_transaction.dart';
@@ -6,7 +7,11 @@ import './models/transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  //para impedir Landscape Mode (investigar bien porque no me funciono)
+  //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -69,6 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  //para el activar/desactivar el Switch que mustra el grafico
+  bool _mostrarGrafico = false;
+
   //metodo para extraer de la lista de transaciones totales, solo las de la ultima semana
   List<Transaction> get _transaccionesRecientes {
     //metodo de List para generar una lista con los elementos que cumplan la condicion
@@ -122,6 +130,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //para conocer si el dispositivo se encuentra en Portrait o Landscape Mode
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Personal Expenses'),
       actions: <Widget>[
@@ -133,6 +144,13 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ],
+    );
+    final listaGastosWidget = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.9,
+      child: TransactionList(_userTransactions, _deleteTransaction),
     );
     return Scaffold(
       //barra superior con titulo y opciones
@@ -151,24 +169,51 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Grafico"),
               ),
             ),*/
-            Container(
-              //se usa la clase MediaQuery para obtener la altuma maxima disponible
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.3,
-              child: Chart(_transaccionesRecientes),
-            ),
-            //formulario nuevos gastos y lista de gastos
-            //UserTransactions(_addNewTransaction, _userTransactions),
-            /** Lista de Gastos */
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.7,
-              child: TransactionList(_userTransactions, _deleteTransaction),
-            ),
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Gráfico"),
+                  //literalmente muestra un suiche para activar/desactivar
+                  Switch(
+                    value: _mostrarGrafico,
+                    onChanged: (val) {
+                      setState(() {
+                        _mostrarGrafico = val;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            //para mostrar grafico y lista cuando Portraint Mode
+            if (!isLandscape)
+              Container(
+                //se usa la clase MediaQuery para obtener la altuma maxima disponible
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_transaccionesRecientes),
+              ),
+            if (!isLandscape)
+              listaGastosWidget,
+            //si se encuentra en Landscape Mode se alterna entre lista y grafico segun el estado del Switch
+            if (isLandscape)
+              _mostrarGrafico
+                  ? //se muestra el grafico o la lista
+                  Container(
+                      //se usa la clase MediaQuery para obtener la altuma maxima disponible
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_transaccionesRecientes),
+                    )
+                  :
+                  //formulario nuevos gastos y lista de gastos
+                  //UserTransactions(_addNewTransaction, _userTransactions),
+                  /** Lista de Gastos */
+                  listaGastosWidget,
           ],
         ),
       ),

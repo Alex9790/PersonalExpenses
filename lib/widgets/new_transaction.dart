@@ -29,7 +29,8 @@ class _NewTransactionState extends State<NewTransaction> {
         _fechaSeleccionada != null) {
       double monto = double.parse(_montoController.text);
       if (monto > 0.0) {
-        widget.nuevaTransaccion(_tituloController.text, monto, _fechaSeleccionada);
+        widget.nuevaTransaccion(
+            _tituloController.text, monto, _fechaSeleccionada);
         //para cerrar el Modal al finalizar el insert
         Navigator.of(context).pop();
       }
@@ -63,61 +64,69 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   Widget build(BuildContext context) {
     //** Input Data */
-    return Card(
-      elevation:
-          5, //mediante el uso de sombras logra un efecto de elevacion en el Card()
-      child: Container(
-        //se usa container para poder incluir padding a los textfields
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                  labelText:
-                      "Titulo"), //label para identificar el input al usuario
-              //onChanged: (val) => tituloInput = val, //se asigna el valor del input a la variable, cada vez que presione una tecla
-              controller: _tituloController,
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: "Monto"),
-              /*onChanged: (valor) {
-                      montoInput = valor;
-                    },*/
-              controller:
-                  _montoController, //otra forma de obtener datos input, es utilizando controllers
-              keyboardType: TextInputType
-                  .number, //tipo de teclado a mostrar en pantalla cuando se hace focus
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  //para formatear la fecha seleccionada
-                  Expanded(//para darle todo el espacio disponible al texto, darle solo lo necesario al boton manteniendolo en el extremo derecho de la pantalla
-                      child: Text(
-                    _fechaSeleccionada == null
-                        ? "No se ha seleccionado una Fecha."
-                        : "Fecha Seleccionada: ${DateFormat.yMd().format(_fechaSeleccionada)}",
-                  )),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      "Seleccionar Fecha",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: _presentDatePicker,
-                  ),
-                ],
+    return SingleChildScrollView( //para que se pueda hacer scroll cuando se despligue el teclado virtual
+          child: Card(
+        elevation:
+            5, //mediante el uso de sombras logra un efecto de elevacion en el Card()
+        child: Container(
+          //se usa container para poder incluir padding a los textfields
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,  //para que se desplace hacia arriba tanto como opcupe el teclado
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                    labelText:
+                        "Titulo"), //label para identificar el input al usuario
+                //onChanged: (val) => tituloInput = val, //se asigna el valor del input a la variable, cada vez que presione una tecla
+                controller: _tituloController,
               ),
-            ),
-            RaisedButton(
-              child: Text("Agregar Transacción"),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
-              onPressed: _submitData,
-            ),
-          ],
+              TextField(
+                decoration: InputDecoration(labelText: "Monto"),
+                /*onChanged: (valor) {
+                        montoInput = valor;
+                      },*/
+                controller:
+                    _montoController, //otra forma de obtener datos input, es utilizando controllers
+                keyboardType: TextInputType
+                    .number, //tipo de teclado a mostrar en pantalla cuando se hace focus
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    //para formatear la fecha seleccionada
+                    Expanded(
+                        //para darle todo el espacio disponible al texto, darle solo lo necesario al boton manteniendolo en el extremo derecho de la pantalla
+                        child: Text(
+                      _fechaSeleccionada == null
+                          ? "No se ha seleccionado una Fecha."
+                          : "Fecha Seleccionada: ${DateFormat.yMd().format(_fechaSeleccionada)}",
+                    )),
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        "Seleccionar Fecha",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: _presentDatePicker,
+                    ),
+                  ],
+                ),
+              ),
+              RaisedButton(
+                child: Text("Agregar Transacción"),
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: _submitData,
+              ),
+            ],
+          ),
         ),
       ),
     );
