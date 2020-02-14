@@ -130,9 +130,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //MediaQuery
+    final mediaQuery = MediaQuery.of(context);
     //para conocer si el dispositivo se encuentra en Portrait o Landscape Mode
     final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+        mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Personal Expenses'),
       actions: <Widget>[
@@ -146,9 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final listaGastosWidget = Container(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.9,
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
@@ -174,8 +176,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Gráfico"),
-                  //literalmente muestra un suiche para activar/desactivar
-                  Switch(
+                  //literalmente muestra un suiche para activar/desactivar, .active() adpata el swicth dependiendo de la plataforma Android/iOS
+                  Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
                     value: _mostrarGrafico,
                     onChanged: (val) {
                       setState(() {
@@ -189,9 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (!isLandscape)
               Container(
                 //se usa la clase MediaQuery para obtener la altuma maxima disponible
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.3,
                 child: Chart(_transaccionesRecientes),
               ),
@@ -203,9 +206,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? //se muestra el grafico o la lista
                   Container(
                       //se usa la clase MediaQuery para obtener la altuma maxima disponible
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.7,
                       child: Chart(_transaccionesRecientes),
                     )
